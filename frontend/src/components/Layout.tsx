@@ -28,7 +28,7 @@ export function Layout({ children }: LayoutProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
-  const { data: currentUser, isLoading: isUserLoading } = useCurrentUser();
+  const { data: currentUser } = useCurrentUser();
   const { data: unreadCount } = useUnreadNotificationCount();
   const { data: pendingCounterOffers } = usePendingCounterOffersCount();
   const logoutMutation = useLogout();

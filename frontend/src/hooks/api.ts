@@ -103,7 +103,7 @@ export function usePlaceBid() {
         return apiClient.placeBid(auctionId, amount)
       }
     },
-    onSuccess: (data, variables) => {
+    onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({ 
         queryKey: queryKeys.bids.byAuction(variables.auctionId) 
       })
@@ -125,7 +125,7 @@ export function useAcceptBid() {
   
   return useMutation({
     mutationFn: (auctionId: string) => apiClient.acceptBid(auctionId),
-    onSuccess: (data, auctionId) => {
+    onSuccess: (_data, auctionId) => {
       queryClient.invalidateQueries({ queryKey: queryKeys.auctions.mine() })
       queryClient.invalidateQueries({ queryKey: queryKeys.auctions.detail(auctionId) })
       toast.success('Bid accepted successfully!')
@@ -141,7 +141,7 @@ export function useRejectBid() {
   
   return useMutation({
     mutationFn: (auctionId: string) => apiClient.rejectBid(auctionId),
-    onSuccess: (data, auctionId) => {
+    onSuccess: (_data, auctionId) => {
       queryClient.invalidateQueries({ queryKey: queryKeys.auctions.mine() })
       queryClient.invalidateQueries({ queryKey: queryKeys.auctions.detail(auctionId) })
       toast.success('Bid rejected')
@@ -158,7 +158,7 @@ export function useMakeCounterOffer() {
   return useMutation({
     mutationFn: ({ auctionId, amount }: { auctionId: string; amount: number }) =>
       apiClient.makeCounterOffer(auctionId, amount),
-    onSuccess: (data, variables) => {
+    onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({ queryKey: queryKeys.auctions.mine() })
       queryClient.invalidateQueries({ queryKey: queryKeys.auctions.detail(variables.auctionId) })
       toast.success('Counter offer sent!')
@@ -316,7 +316,7 @@ export function useMakeAuctionDecision() {
       decision: 'accept' | 'reject' | 'counter', 
       counterAmount?: number 
     }) => apiClient.makeAuctionDecision(auctionId, decision, counterAmount),
-    onSuccess: (data, variables) => {
+    onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({ queryKey: ['auctions'] })
       queryClient.invalidateQueries({ queryKey: ['counter-offers'] })
       
@@ -364,7 +364,6 @@ export function useEndAuction() {
 }
 
 export function useSendInvoice() {
-  const queryClient = useQueryClient()
   
   return useMutation({
     mutationFn: (id: string) => apiClient.sendInvoice(id),
@@ -464,7 +463,7 @@ export function useLogout() {
       queryClient.clear()
       toast.success('Logged out successfully!')
     },
-    onError: (error: any) => {
+    onError: (_error: any) => {
       // Even if logout fails on server, clear local state
       apiClient.setToken(null)
       wsService.disconnect() // Disconnect WebSocket on logout

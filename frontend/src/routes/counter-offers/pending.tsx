@@ -7,16 +7,11 @@ import {
 } from "../../components/ui/Card";
 import { Button } from "../../components/ui/Button";
 import { Badge } from "../../components/ui/Badge";
-import {
-  LoadingState,
-  ErrorState,
-  EmptyState,
-} from "../../components/ui/States";
+import { LoadingState, ErrorState } from "../../components/ui/States";
 import {
   StarIcon,
   DollarSignIcon,
   ClockIcon,
-  HeartIcon,
   XIcon,
   UserIcon,
   HammerIcon,

@@ -260,7 +260,7 @@ function LoginPage() {
                   </label>
 
                   <Link
-                    to="#"
+                    to="."
                     className="text-sm text-primary-400 hover:text-primary-300 transition-colors"
                   >
                     Forgot password?

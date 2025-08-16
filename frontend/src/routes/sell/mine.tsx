@@ -1,24 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "../../components/ui/Card";
+import { Card, CardContent } from "../../components/ui/Card";
 import { Button } from "../../components/ui/Button";
 import { Badge } from "../../components/ui/Badge";
 import { Input } from "../../components/ui/Input";
-import {
-  LoadingState,
-  ErrorState,
-  EmptyState,
-} from "../../components/ui/States";
+import { LoadingState, ErrorState } from "../../components/ui/States";
 import {
   HammerIcon,
   DollarSignIcon,
   CalendarIcon,
   ClockIcon,
-  StarIcon,
   FireIcon,
   GridIcon,
   LiveIcon,
