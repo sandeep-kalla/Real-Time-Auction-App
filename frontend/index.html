@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.ico" />
+    
+    <!-- Theme and Color Scheme -->
+    <meta name="theme-color" content="#2e073f" />
+    <meta name="color-scheme" content="dark" />
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="AuctionHub - The premier destination for premium auctions. Discover rare items and bid with confidence in real-time auctions." />
+    <meta name="keywords" content="auction, bidding, premium items, real-time, marketplace, collectibles, art, antiques" />
+    <meta name="author" content="AuctionHub" />
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="AuctionHub - Premium Live Auctions" />
+    <meta property="og:description" content="Discover rare treasures and bid in real-time at the world's most exclusive auction platform." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/logo512.png" />
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="AuctionHub - Premium Live Auctions" />
+    <meta name="twitter:description" content="Discover rare treasures and bid in real-time at the world's most exclusive auction platform." />
+    
+    <!-- Apple Meta Tags -->
+    <link rel="apple-touch-icon" href="/logo192.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="AuctionHub" />
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Preconnect to Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <title>AuctionHub - Premium Live Auctions</title>
+    
+    <!-- Prevent FOUC (Flash of Unstyled Content) -->
+    <style>
+      html { background-color: #0f0f0f; }
+      
+      .loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #2e073f 0%, #7a1cac 50%, #ad49e1 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      }
+      
+      .loading-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 2rem;
+      }
+      
+      .loading-logo {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+      
+      .loading-hammer {
+        width: 48px;
+        height: 48px;
+        fill: white;
+        animation: hammer-bounce 2s ease-in-out infinite;
+        filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+      }
+      
+      .loading-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: white;
+        background: linear-gradient(45deg, #ffffff, #e0e7ff, #c084fc);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: text-shimmer 3s ease-in-out infinite;
+        letter-spacing: -0.025em;
+      }
+      
+      .loading-subtitle {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 1.1rem;
+        font-weight: 400;
+        margin-bottom: 2rem;
+        animation: fade-pulse 2s ease-in-out infinite;
+      }
+      
+      .loading-spinner-container {
+        position: relative;
+        width: 120px;
+        height: 120px;
+      }
+      
+      .loading-spinner {
+        width: 120px;
+        height: 120px;
+        border: 4px solid rgba(255, 255, 255, 0.1);
+        border-top: 4px solid rgba(255, 255, 255, 0.9);
+        border-right: 4px solid rgba(255, 255, 255, 0.7);
+        border-radius: 50%;
+        animation: modern-spin 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+        position: relative;
+      }
+      
+      .loading-spinner::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80px;
+        height: 80px;
+        border: 3px solid rgba(255, 255, 255, 0.2);
+        border-top: 3px solid rgba(255, 255, 255, 0.6);
+        border-radius: 50%;
+        animation: modern-spin 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite reverse;
+      }
+      
+      .loading-spinner::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(45deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.3));
+        border-radius: 50%;
+        animation: pulse-glow 2s ease-in-out infinite;
+      }
+      
+      .loading-dots {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 1.5rem;
+      }
+      
+      .loading-dot {
+        width: 12px;
+        height: 12px;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 50%;
+        animation: dot-bounce 1.4s ease-in-out infinite both;
+      }
+      
+      .loading-dot:nth-child(1) { animation-delay: -0.32s; }
+      .loading-dot:nth-child(2) { animation-delay: -0.16s; }
+      .loading-dot:nth-child(3) { animation-delay: 0s; }
+      
+      .loading-progress {
+        width: 200px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 2px;
+        overflow: hidden;
+        margin-top: 1rem;
+      }
+      
+      .loading-progress-bar {
+        height: 100%;
+        background: linear-gradient(90deg, 
+          rgba(255, 255, 255, 0.8) 0%, 
+          rgba(255, 255, 255, 1) 50%, 
+          rgba(255, 255, 255, 0.8) 100%);
+        border-radius: 2px;
+        animation: progress-slide 2s ease-in-out infinite;
+      }
+      
+      @keyframes hammer-bounce {
+        0%, 100% { transform: rotate(0deg) scale(1); }
+        50% { transform: rotate(15deg) scale(1.1); }
+      }
+      
+      @keyframes text-shimmer {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+      }
+      
+      @keyframes fade-pulse {
+        0%, 100% { opacity: 0.8; }
+        50% { opacity: 1; }
+      }
+      
+      @keyframes modern-spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      @keyframes pulse-glow {
+        0%, 100% { 
+          opacity: 0.6; 
+          transform: translate(-50%, -50%) scale(1);
+        }
+        50% { 
+          opacity: 1; 
+          transform: translate(-50%, -50%) scale(1.1);
+        }
+      }
+      
+      @keyframes dot-bounce {
+        0%, 80%, 100% { 
+          transform: scale(0.8);
+          opacity: 0.5;
+        }
+        40% { 
+          transform: scale(1.2);
+          opacity: 1;
+        }
+      }
+      
+      @keyframes progress-slide {
+        0% { transform: translateX(-100%); }
+        50% { transform: translateX(0%); }
+        100% { transform: translateX(100%); }
+      }
+      
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .loading-title {
+          font-size: 2rem;
+        }
+        .loading-subtitle {
+          font-size: 1rem;
+        }
+        .loading-spinner-container {
+          width: 100px;
+          height: 100px;
+        }
+        .loading-spinner {
+          width: 100px;
+          height: 100px;
+        }
+        .loading-hammer {
+          width: 40px;
+          height: 40px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+      <div class="loading-content">
+        <!-- Logo Section -->
+        <div class="loading-logo">
+          <svg class="loading-hammer" viewBox="0 0 24 24">
+            <path d="M19.7 6.3l-1.4-1.4-4.3 4.3L12.6 8l-1.4 1.4 1.4 1.4-8.5 8.5 2.8 2.8 8.5-8.5 1.4 1.4L18.3 12l-1.2-1.4 4.3-4.3z" />
+          </svg>
+          <h1 class="loading-title">AuctionHub</h1>
+        </div>
+        
+        <p class="loading-subtitle">Premium Live Auctions</p>
+        
+        <!-- Modern Spinner -->
+        <div class="loading-spinner-container">
+          <div class="loading-spinner"></div>
+        </div>
+        
+        <!-- Loading Dots -->
+        <div class="loading-dots">
+          <div class="loading-dot"></div>
+          <div class="loading-dot"></div>
+          <div class="loading-dot"></div>
+        </div>
+        
+        <!-- Progress Bar -->
+        <div class="loading-progress">
+          <div class="loading-progress-bar"></div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="app"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Remove loading screen when app loads -->
+    <script>
+      window.addEventListener('load', function() {
+        // Ensure minimum loading time for smooth experience
+        setTimeout(function() {
+          const loadingScreen = document.getElementById('loading-screen');
+          if (loadingScreen) {
+            // Add fade-out effect
+            loadingScreen.style.opacity = '0';
+            loadingScreen.style.transform = 'scale(0.95)';
+            loadingScreen.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            
+            // Remove loading screen after transition
+            setTimeout(function() {
+              loadingScreen.remove();
+            }, 600);
+          }
+        }, 800); // Minimum loading time for better UX
+      });
+      
+      // Fallback: Remove loading screen if it takes too long
+      setTimeout(function() {
+        const loadingScreen = document.getElementById('loading-screen');
+        if (loadingScreen) {
+          loadingScreen.remove();
+        }
+      }, 10000); // 10 seconds max
+    </script>
+  </body>
+</html>
