@@ -24,19 +24,12 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: [
-    process.env.CORS_ORIGIN || 'http://localhost:3000',
-    'https://mini-auction-hub.onrender.com'
-  ],
+  origin: process.env.CORS_ORIGIN || '*',
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-  exposedHeaders: ['X-Total-Count']
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
-app.use(helmet({
-  crossOriginEmbedderPolicy: false,
-  crossOriginResourcePolicy: { policy: "cross-origin" }
-}));
+app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -46,15 +39,6 @@ app.use(express.static(path.join(__dirname, '../public')));
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
-});
-
-// Handle preflight requests for all routes
-app.options('*', (req, res) => {
-  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.sendStatus(200);
 });
 
 // Create HTTP server
