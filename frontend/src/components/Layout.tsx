@@ -102,7 +102,11 @@ export function Layout({ children }: LayoutProps) {
               className="flex items-center gap-2 group flex-shrink-0"
             >
               <div className="relative">
-                <HammerIcon className="w-8 h-8 text-primary-500 transition-all duration-300 group-hover:rotate-12 group-hover:scale-110" />
+                <img
+                  src="/favicon.png"
+                  alt="AuctionHub Logo"
+                  className="w-8 h-8 transition-all duration-300 group-hover:rotate-12 group-hover:scale-110"
+                />
                 <div className="absolute inset-0 bg-primary-500 blur-xl opacity-20 group-hover:opacity-40 transition-opacity" />
               </div>
               <div className="flex flex-col">
@@ -377,7 +381,11 @@ export function Layout({ children }: LayoutProps) {
         <div className="container-custom px-6 lg:px-12 py-8">
           <div className="text-center space-y-4">
             <div className="flex items-center justify-center gap-3 mb-4">
-              <HammerIcon className="w-6 h-6 text-primary-500" />
+              <img
+                src="/favicon.png"
+                alt="AuctionHub Logo"
+                className="w-6 h-6"
+              />
               <span className="text-lg font-bold text-gradient">
                 AuctionHub
               </span>
