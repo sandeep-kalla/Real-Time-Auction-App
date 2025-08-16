@@ -23,7 +23,12 @@ require('dotenv').config();
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: process.env.CORS_ORIGIN || '*',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -68,27 +73,44 @@ const db = require('./models');
 const testDatabaseConnection = async () => {
   try {
     await db.sequelize.authenticate();
-    // console.log('Database connection has been established successfully'); // Commented out for cleaner logs
+    console.log('✅ Database connection established successfully');
   } catch (error) {
-    console.error('Unable to connect to the database:', error);
+    console.error('❌ Unable to connect to the database:', error);
     process.exit(1);
+  }
+};
+
+// Function to run migrations in production
+const runMigrations = async () => {
+  if (process.env.NODE_ENV === 'production') {
+    try {
+      console.log('🔄 Running database migrations...');
+      await db.sequelize.sync();
+      console.log('✅ Database migrations completed');
+    } catch (error) {
+      console.error('❌ Migration failed:', error);
+      process.exit(1);
+    }
   }
 };
 
 // Start server after testing database connection
 const PORT = process.env.PORT || 5000;
-testDatabaseConnection().then(() => {
-  server.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-    console.log('Note: If you need to run migrations, use: npm run migrate');
-    
-    // Initialize and start auction lifecycle service
-    auctionLifecycleService.init(io);
-    auctionLifecycleService.start();
+testDatabaseConnection()
+  .then(runMigrations)
+  .then(() => {
+    server.listen(PORT, '0.0.0.0', () => {
+      console.log(`🚀 Server running on port ${PORT}`);
+      console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
+      console.log('📝 Note: If you need to run migrations manually, use: npm run migrate');
+      
+      // Initialize and start auction lifecycle service
+      auctionLifecycleService.init(io);
+      auctionLifecycleService.start();
+    });
+  }).catch(err => {
+    console.error('❌ Failed to start server:', err);
+    process.exit(1);
   });
-}).catch(err => {
-  console.error('Failed to start server:', err);
-  process.exit(1);
-});
 
 module.exports = { app, server, io, getIO: () => io };

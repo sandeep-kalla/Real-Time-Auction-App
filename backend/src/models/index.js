@@ -5,10 +5,14 @@ require('dotenv').config({ path: path.join(__dirname, '../../.env') });
 
 // Initialize Sequelize with PostgreSQL connection
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
-  host: 'localhost',
-  port: 5432,
   dialect: 'postgres',
   logging: false, // Disabled query logging for cleaner output
+  dialectOptions: {
+    ssl: process.env.NODE_ENV === 'production' ? {
+      require: true,
+      rejectUnauthorized: false
+    } : false
+  }
 });
 
 // Test database connection

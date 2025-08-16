@@ -7,7 +7,9 @@
     "test": "jest",
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "migrate": "node src/utils/runMigrations.js"
+    "migrate": "node src/utils/runMigrations.js",
+    "build": "npm install",
+    "deploy": "node deploy.js && npm start"
   },
   "keywords": [],
   "author": "",
